@@ -1,0 +1,93 @@
+{/* Carreras */}
+        <h2 className="text-center fw-bold mb-4">Nuestras Carreras</h2>
+        <Row className="g-4">
+          {[
+            {
+              titulo: "Ingeniería de Software",
+              img: "https://pregrado.upc.edu.pe/facultad-de-ingenieria/ingenieria-de-software/img/Malla_curricular_especializada.jpg",
+              desc: "Forma parte de la revolución digital desarrollando soluciones tecnológicas.",
+            },
+            {
+              titulo: "Diseño Gráfico",
+              img: "https://www.senati.edu.pe/sites/default/files/2017/carrera/11/carrera-dual-diseno-grafico-senati-1800x1190.jpg",
+              desc: "Explora tu creatividad con las mejores herramientas y técnicas modernas.",
+            },
+            {
+              titulo: "Gastronomía",
+              img: "https://blog-u-erre.talisis.com/hubfs/concepto-de-gastronomia.webp",
+              desc: "Desarrolla tus habilidades culinarias con calidad internacional.",
+            },
+            {
+              titulo: "Seguridad Industrial",
+              img: "https://microsegur.com/wp-content/uploads/2025/04/proyectos-de-seguridad-industrial.jpg",
+              desc: "Especialízate en prevención y seguridad laboral para industrias modernas.",
+            },
+            {
+              titulo: "Mecánica Automotriz",
+              img: "https://www.senati.edu.pe/sites/default/files/2017/carrera/09/mecanica-automotriz-senati1800-x-1190_0.jpg",
+              desc: "Conviértete en experto en mantenimiento y reparación de vehículos.",
+            },
+          ].map((carrera, i) => (
+            <Col lg={4} md={6} key={i}>
+              <Card
+                className="h-100 shadow-lg border-0 text-center card-hover rounded-4"
+                style={{
+                  transition: "transform 0.3s, box-shadow 0.3s",
+                }}
+              >
+                <div style={{ overflow: "hidden", height: "220px" }}>
+                  <Card.Img
+                    variant="top"
+                    src={carrera.img}
+                    alt={carrera.titulo}
+                    style={{
+                      objectFit: "cover",
+                      height: "100%",
+                      width: "100%",
+                      transition: "transform 0.5s ease",
+                    }}
+                    className="img-hover"
+                  />
+                </div>
+                <Card.Body>
+                  <Card.Title
+                    className="fw-bold"
+                    style={{ color: "#0a1931" }}
+                  >
+                    {carrera.titulo}
+                  </Card.Title>
+                  <Card.Text className="text-muted">{carrera.desc}</Card.Text>
+                  <Button
+                    style={{
+                      backgroundColor: "#0a1931",
+                      border: "none",
+                      borderRadius: "30px",
+                      padding: "10px 20px",
+                      fontWeight: "600",
+                    }}
+                    className="btn-hover"
+                  >
+                    Más información <FaChevronRight />
+                  </Button>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+
+
+
+.card-hover:hover {
+          transform: translateY(-8px);
+          box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+        }
+        .img-hover:hover {
+          transform: scale(1.1);
+        }
+        .btn-hover:hover {
+          transform: scale(1.05);
+          background-color: #13294b !important;
+        }
+
+
+

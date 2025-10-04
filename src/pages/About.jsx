@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import '../styles/animations.css';
+import '../styles/modal-animations.css';
 import {
   FaUserGraduate,
   FaLaptopCode,
@@ -40,6 +42,7 @@ function About() {
   const [isLoading, setIsLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [selectedCareer, setSelectedCareer] = useState(null);
+  const [isClosing, setIsClosing] = useState(false);
   const [showStickyMenu, setShowStickyMenu] = useState(false);
   const menuRef = useRef(null);
   const [activeSection, setActiveSection] = useState(null);
@@ -103,12 +106,20 @@ function About() {
     if (typeof career === 'object' && career !== null) {
       setSelectedCareer(career);
       setShowModal(true);
+      // Prevenir scroll del body
+      document.body.style.overflow = 'hidden';
     }
   };
 
   const handleCloseModal = () => {
-    setShowModal(false);
-    setSelectedCareer(null);
+    setIsClosing(true);
+    setTimeout(() => {
+      setShowModal(false);
+      setSelectedCareer(null);
+      setIsClosing(false);
+      // Restaurar scroll del body
+      document.body.style.overflow = 'unset';
+    }, 400);
   };
 
   const getCardStyle = (cardId) => ({
@@ -152,7 +163,7 @@ function About() {
   }
 
   return (
-    <div style={{ background: "linear-gradient(135deg, #0a1931 0%, #1e3c72 100%)", minHeight: '100vh', paddingTop: '0px', paddingBottom: '0px' }}>
+    <div style={{ background: "linear-gradient(135deg, #0a1931 0%, #0a0e27 100%)", minHeight: '100vh', paddingTop: '0px', paddingBottom: '0px' }}>
       {/* Hero Section */}
       <div
         id="hero"
@@ -168,16 +179,29 @@ function About() {
         <div
           className="position-absolute w-100 h-100"
           style={{
-            backgroundColor: 'rgba(10, 25, 49, 0.8)',
+            background: 'linear-gradient(135deg, rgba(10, 25, 49, 0.92) 0%, rgba(10, 57, 230, 0.85) 100%)',
             top: 0,
             left: 0
           }}
         ></div>
         <div className="position-relative h-100 d-flex flex-column justify-content-center align-items-center text-center text-white px-3">
-          <h1 className="display-2 fw-bold mb-0" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.3)' }}>
-            SENATI
-          </h1>
-          <p className="lead mb-4" style={{ maxWidth: '800px', textShadow: '0 2px 5px rgba(0,0,0,0.3)' }}>
+          <div className="mb-4" style={{ animation: 'fadeInDown 1s ease-out' }}>
+            <h1 className="display-1 fw-bold mb-3" style={{ 
+              textShadow: '0 4px 20px rgba(0,0,0,0.5)',
+              letterSpacing: '2px'
+            }}>
+              SENATI
+            </h1>
+            <div className="d-inline-block" style={{ width: '120px', height: '4px', backgroundColor: '#00aaff', borderRadius: '2px' }}></div>
+          </div>
+          <p className="lead mb-5" style={{ 
+            maxWidth: '900px', 
+            textShadow: '0 2px 10px rgba(0,0,0,0.5)',
+            fontSize: '1.4rem',
+            lineHeight: '1.8',
+            animation: 'fadeInUp 1s ease-out 0.3s',
+            animationFillMode: 'both'
+          }}>
             Formando profesionales técnicos innovadores y altamente productivos desde 1961
           </p>
           <div>
@@ -185,12 +209,16 @@ function About() {
               href="#nosotros"
               variant="primary"
               size="lg"
-              className="me-3 px-4 py-2"
+              className="me-3 px-5 py-3"
               style={{
                 backgroundColor: '#00aaff',
                 borderColor: '#00aaff',
-                borderRadius: '30px',
-                boxShadow: '0 4px 15px rgba(0, 170, 255, 0.4)'
+                borderRadius: '50px',
+                boxShadow: '0 6px 25px rgba(0, 170, 255, 0.5)',
+                fontWeight: '600',
+                fontSize: '1.1rem',
+                transition: 'all 0.3s ease',
+                border: '2px solid #00aaff'
               }}
             >
               Conócenos
@@ -291,7 +319,10 @@ function About() {
                 <Card.Body className="p-5">
                   <Row>
                     <Col md={6} className="mb-4 mb-md-0">
-                      <h3 className="fw-bold mb-4" style={{ color: '#0a39e6' }}>Nuestra Historia</h3>
+                      <div className="mb-4">
+                        <h3 className="fw-bold" style={{ color: '#0a39e6', fontSize: '1.8rem', marginBottom: '0.5rem' }}>Nuestra Historia</h3>
+                        <div style={{ width: '60px', height: '3px', backgroundColor: '#00aaff', borderRadius: '2px' }}></div>
+                      </div>
                       <p className="text-secondary">
                         SENATI es una institución creada a iniciativa de la Sociedad Nacional de Industrias, con el objetivo de proporcionar formación y capacitación profesional en actividades industriales y también para labores en instalaciones, reparaciones y mantenimiento para cualquier otra actividad económica.
                       </p>
@@ -300,11 +331,17 @@ function About() {
                       </p>
                     </Col>
                     <Col md={6}>
-                      <h3 className="fw-bold mb-4" style={{ color: '#0a39e6' }}>Nuestra Misión</h3>
+                      <div className="mb-4">
+                        <h3 className="fw-bold" style={{ color: '#0a39e6', fontSize: '1.8rem', marginBottom: '0.5rem' }}>Nuestra Misión</h3>
+                        <div style={{ width: '60px', height: '3px', backgroundColor: '#00aaff', borderRadius: '2px' }}></div>
+                      </div>
                       <p className="text-secondary mb-4">
                         Formar profesionales técnicos innovadores y altamente productivos.
                       </p>
-                      <h3 className="fw-bold mb-4" style={{ color: '#0a39e6' }}>Nuestra Visión</h3>
+                      <div className="mb-4 mt-4">
+                        <h3 className="fw-bold" style={{ color: '#0a39e6', fontSize: '1.8rem', marginBottom: '0.5rem' }}>Nuestra Visión</h3>
+                        <div style={{ width: '60px', height: '3px', backgroundColor: '#00aaff', borderRadius: '2px' }}></div>
+                      </div>
                       <p className="text-secondary">
                         Liderar en América Latina la excelencia en formación profesional tecnológica.
                       </p>
@@ -319,15 +356,15 @@ function About() {
 
       {/* Sticky secondary menu that appears under the navbar when the original menu scrolls out */}
       {showStickyMenu && (
-        <div style={{ position: 'fixed', top: (document && document.querySelector('.navbar') ? Math.ceil(document.querySelector('.navbar').getBoundingClientRect().height) : 0), left: 0, right: 0, zIndex: 1050, background: 'white', boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}>
+        <div style={{ position: 'fixed', top: (document && document.querySelector('.navbar') ? Math.ceil(document.querySelector('.navbar').getBoundingClientRect().height) : 0), left: 0, right: 0, zIndex: 1050, background: '#0a1f44', boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}>
           <div className="container">
             <div className="d-flex align-items-center justify-content-center py-2">
-              <a onClick={scrollToTop} className="d-flex align-items-center text-decoration-none mx-3" style={{ color: '#0a1931', cursor: 'pointer' }}>
+              <a onClick={scrollToTop} className="d-flex align-items-center text-decoration-none mx-3" style={{ color: '#ffffff', cursor: 'pointer' }}>
                 <span style={{ fontSize: '20px', color: '#00aaff', marginRight: '8px' }}><FaChevronUp /></span>
                 <span className="fw-bold">Inicio</span>
               </a>
               {menuItems.map((item, idx) => (
-                <a key={idx} href={item.href} className="d-flex align-items-center text-decoration-none mx-3" style={{ color: '#0a1931' }}>
+                <a key={idx} href={item.href} className="d-flex align-items-center text-decoration-none mx-3" style={{ color: '#ffffff' }}>
                   <span style={{ fontSize: '20px', color: '#00aaff', marginRight: '8px' }}>{item.icon}</span>
                   <span className="fw-bold">{item.label}</span>
                 </a>
@@ -340,6 +377,7 @@ function About() {
       <Container>
 
         {/* Sección Alianzas */}
+        
         <section
           id="alianzas"
           className="w-100 position-relative py-5"
@@ -471,7 +509,7 @@ function About() {
                 onMouseLeave={handleMouseLeave}
                 className="h-100 border-0"
               >
-                <div className="position-relative" style={{ height: '8px', backgroundColor: '#00aaff', borderTopLeftRadius: '12px', borderTopRightRadius: '12px' }}></div>
+                <div className="position-relative" style={{ height: '6px', background: 'linear-gradient(90deg, #00aaff 0%, #0a39e6 100%)', borderTopLeftRadius: '12px', borderTopRightRadius: '12px' }}></div>
                 <Card.Body className="text-center p-4">
                   <div className="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-4"
                     style={{
@@ -483,7 +521,7 @@ function About() {
                     }}>
                     <FaUserGraduate style={{ fontSize: '2rem', color: hoveredCard === 'valor1' ? '#ffffff' : '#00aaff' }} />
                   </div>
-                  <h5 className="fw-bold mb-3" style={{ color: '#2c3e50' }}>Excelencia</h5>
+                  <h5 className="fw-bold mb-3" style={{ color: '#2c3e50', fontSize: '1.3rem' }}>Excelencia</h5>
                   <p className="text-secondary">
                     Buscamos la mejora continua en todos nuestros procesos formativos
                   </p>
@@ -498,7 +536,7 @@ function About() {
                 onMouseLeave={handleMouseLeave}
                 className="h-100 border-0"
               >
-                <div className="position-relative" style={{ height: '8px', backgroundColor: '#00aaff', borderTopLeftRadius: '12px', borderTopRightRadius: '12px' }}></div>
+                <div className="position-relative" style={{ height: '6px', background: 'linear-gradient(90deg, #00aaff 0%, #0a39e6 100%)', borderTopLeftRadius: '12px', borderTopRightRadius: '12px' }}></div>
                 <Card.Body className="text-center p-4">
                   <div className="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-4"
                     style={{
@@ -510,7 +548,7 @@ function About() {
                     }}>
                     <FaIndustry style={{ fontSize: '2rem', color: hoveredCard === 'valor2' ? '#ffffff' : '#00aaff' }} />
                   </div>
-                  <h5 className="fw-bold mb-3" style={{ color: '#2c3e50' }}>Compromiso</h5>
+                  <h5 className="fw-bold mb-3" style={{ color: '#2c3e50', fontSize: '1.3rem' }}>Compromiso</h5>
                   <p className="text-secondary">
                     Dedicación total con el desarrollo de nuestros estudiantes
                   </p>
@@ -525,7 +563,7 @@ function About() {
                 onMouseLeave={handleMouseLeave}
                 className="h-100 border-0"
               >
-                <div className="position-relative" style={{ height: '8px', backgroundColor: '#00aaff', borderTopLeftRadius: '12px', borderTopRightRadius: '12px' }}></div>
+                <div className="position-relative" style={{ height: '6px', background: 'linear-gradient(90deg, #00aaff 0%, #0a39e6 100%)', borderTopLeftRadius: '12px', borderTopRightRadius: '12px' }}></div>
                 <Card.Body className="text-center p-4">
                   <div className="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-4"
                     style={{
@@ -537,7 +575,7 @@ function About() {
                     }}>
                     <FaLaptopCode style={{ fontSize: '2rem', color: hoveredCard === 'valor3' ? '#ffffff' : '#00aaff' }} />
                   </div>
-                  <h5 className="fw-bold mb-3" style={{ color: '#2c3e50' }}>Innovación</h5>
+                  <h5 className="fw-bold mb-3" style={{ color: '#2c3e50', fontSize: '1.3rem' }}>Innovación</h5>
                   <p className="text-secondary">
                     Incorporamos tecnología de punta en la formación técnica
                   </p>
@@ -552,7 +590,7 @@ function About() {
                 onMouseLeave={handleMouseLeave}
                 className="h-100 border-0"
               >
-                <div className="position-relative" style={{ height: '8px', backgroundColor: '#00aaff', borderTopLeftRadius: '12px', borderTopRightRadius: '12px' }}></div>
+                <div className="position-relative" style={{ height: '6px', background: 'linear-gradient(90deg, #00aaff 0%, #0a39e6 100%)', borderTopLeftRadius: '12px', borderTopRightRadius: '12px' }}></div>
                 <Card.Body className="text-center p-4">
                   <div className="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-4"
                     style={{
@@ -564,7 +602,7 @@ function About() {
                     }}>
                     <FaGlobe style={{ fontSize: '2rem', color: hoveredCard === 'valor4' ? '#ffffff' : '#00aaff' }} />
                   </div>
-                  <h5 className="fw-bold mb-3" style={{ color: '#2c3e50' }}>Calidad</h5>
+                  <h5 className="fw-bold mb-3" style={{ color: '#2c3e50', fontSize: '1.3rem' }}>Calidad</h5>
                   <p className="text-secondary">
                     Garantizamos una formación de excelencia con estándares internacionales
                   </p>
@@ -606,7 +644,7 @@ function About() {
                   onMouseLeave={handleMouseLeave}
                   className="h-100 border-0"
                 >
-                  <div className="position-relative" style={{ height: '8px', backgroundColor: '#00aaff', borderTopLeftRadius: '12px', borderTopRightRadius: '12px' }}></div>
+                  <div className="position-relative" style={{ height: '6px', background: 'linear-gradient(90deg, #00aaff 0%, #0a39e6 100%)', borderTopLeftRadius: '12px', borderTopRightRadius: '12px' }}></div>
                   <Card.Body className="p-4">
                     <div className="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-4"
                       style={{
@@ -632,7 +670,7 @@ function About() {
                   onMouseLeave={handleMouseLeave}
                   className="h-100 border-0"
                 >
-                  <div className="position-relative" style={{ height: '8px', backgroundColor: '#00aaff', borderTopLeftRadius: '12px', borderTopRightRadius: '12px' }}></div>
+                  <div className="position-relative" style={{ height: '6px', background: 'linear-gradient(90deg, #00aaff 0%, #0a39e6 100%)', borderTopLeftRadius: '12px', borderTopRightRadius: '12px' }}></div>
                   <Card.Body className="p-4">
                     <div className="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-4"
                       style={{
@@ -658,7 +696,7 @@ function About() {
                   onMouseLeave={handleMouseLeave}
                   className="h-100 border-0"
                 >
-                  <div className="position-relative" style={{ height: '8px', backgroundColor: '#00aaff', borderTopLeftRadius: '12px', borderTopRightRadius: '12px' }}></div>
+                  <div className="position-relative" style={{ height: '6px', background: 'linear-gradient(90deg, #00aaff 0%, #0a39e6 100%)', borderTopLeftRadius: '12px', borderTopRightRadius: '12px' }}></div>
                   <Card.Body className="p-4">
                     <div className="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-4"
                       style={{
@@ -745,7 +783,10 @@ function About() {
             </Row>
             <Row className="justify-content-center">
               <Col lg={12}>
-                <h3 className="text-center text-white fw-bold mb-4">Programas disponibles</h3>
+                <div className="text-center mb-5">
+                  <h3 className="text-white fw-bold" style={{ fontSize: '2rem', textShadow: '0 2px 10px rgba(0,0,0,0.3)', marginBottom: '0.5rem' }}>Programas disponibles</h3>
+                  <div className="d-inline-block" style={{ width: '80px', height: '3px', backgroundColor: '#ffffff', borderRadius: '2px', boxShadow: '0 2px 10px rgba(255,255,255,0.3)' }}></div>
+                </div>
                 <Row className="g-4">
                   {carreras.map((carrera, index) => (
                     <Col lg={4} md={6} key={index}>
@@ -763,7 +804,17 @@ function About() {
                         onMouseEnter={() => handleMouseEnter(`prog-${index}`)}
                         onMouseLeave={handleMouseLeave}
                       >
-                        <div style={{ overflow: "hidden", height: "200px" }}>
+                        <div style={{ overflow: "hidden", height: "220px", position: 'relative' }}>
+                          <div style={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            background: hoveredCard === `prog-${index}` ? 'linear-gradient(to bottom, transparent 0%, rgba(10, 57, 230, 0.3) 100%)' : 'transparent',
+                            transition: 'all 0.3s ease',
+                            zIndex: 1
+                          }}></div>
                           <img
                             src={carrera.img || 'https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80'}
                             alt={carrera.titulo}
@@ -832,7 +883,10 @@ function About() {
 
             <Row className="justify-content-center mb-5">
               <Col lg={10}>
-                <h3 className="text-center fw-bold mb-4" style={{ color: '#0a39e6' }}>Servicios educativos</h3>
+                <div className="text-center mb-5">
+                  <h3 className="fw-bold" style={{ color: '#0a39e6', fontSize: '1.8rem', marginBottom: '0.5rem' }}>Servicios educativos</h3>
+                  <div className="d-inline-block" style={{ width: '80px', height: '3px', backgroundColor: '#00aaff', borderRadius: '2px' }}></div>
+                </div>
                 <Row className="g-4">
                   {servicios.educativos.map((s, i) => (
                     <Col md={6} key={i}>
@@ -876,7 +930,10 @@ function About() {
 
             <Row className="justify-content-center">
               <Col lg={10}>
-                <h3 className="text-center fw-bold mb-4" style={{ color: '#0a39e6' }}>Servicios empresariales</h3>
+                <div className="text-center mb-5">
+                  <h3 className="fw-bold" style={{ color: '#0a39e6', fontSize: '1.8rem', marginBottom: '0.5rem' }}>Servicios empresariales</h3>
+                  <div className="d-inline-block" style={{ width: '80px', height: '3px', backgroundColor: '#00aaff', borderRadius: '2px' }}></div>
+                </div>
                 <Row className="g-4">
                   {servicios.empresariales.map((s, i) => (
                     <Col md={6} key={i}>
@@ -1065,29 +1122,70 @@ function About() {
       </footer>
 
       {/* Modal para detalles de carrera */}
-      {selectedCareer && (
-        <div className="modal fade show" style={{ display: showModal ? 'block' : 'none' }} role="dialog">
-          <div className="modal-dialog modal-lg modal-dialog-centered" role="document">
-            <div className="modal-content">
-              <div className="modal-header" style={{ backgroundColor: '#0a1931', color: 'white' }}>
-                <h5 className="modal-title">{selectedCareer.titulo}</h5>
-                <button type="button" className="btn-close" aria-label="Close" onClick={handleCloseModal}></button>
-              </div>
-              <div className="modal-body">
-                <img src={selectedCareer.img} alt={selectedCareer.titulo} style={{ width: '100%', borderRadius: '8px', marginBottom: '16px' }} />
-                <p className="text-secondary">{selectedCareer.desc}</p>
-                <ul style={{ textAlign: 'left' }}>
-                  <li><strong>Duración:</strong> {selectedCareer.duracion}</li>
-                  <li><strong>Perfil del egresado:</strong> {selectedCareer.perfil}</li>
-                  <li><strong>Oportunidades laborales:</strong> {selectedCareer.oportunidades}</li>
-                </ul>
-              </div>
-              <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" onClick={handleCloseModal}>Cerrar</button>
+      {(selectedCareer || isClosing) && showModal && (
+        <>
+          {/* Backdrop difuminado */}
+          <div 
+            className={`modal-backdrop-custom ${isClosing ? 'closing' : ''}`}
+            onClick={handleCloseModal}
+            style={{ pointerEvents: isClosing ? 'none' : 'auto' }}
+          ></div>
+          
+          {/* Modal */}
+          <div className={`modal-custom ${isClosing ? 'closing' : ''}`} role="dialog">
+            <div className="modal-dialog modal-lg modal-dialog-custom" role="document">
+              <div className="modal-content modal-content-custom">
+                <div className="modal-header modal-header-custom">
+                  <h5 className="modal-title fw-bold">{selectedCareer.titulo}</h5>
+                  <button 
+                    type="button" 
+                    className="btn-close btn-close-white btn-close-custom" 
+                    aria-label="Close" 
+                    onClick={handleCloseModal}
+                  ></button>
+                </div>
+                <div className="modal-body modal-body-custom">
+                  <img 
+                    src={selectedCareer.img} 
+                    alt={selectedCareer.titulo} 
+                    style={{ 
+                      width: '100%', 
+                      borderRadius: '12px', 
+                      marginBottom: '1.5rem',
+                      boxShadow: '0 4px 15px rgba(0,0,0,0.1)'
+                    }} 
+                  />
+                  <p className="text-secondary" style={{ fontSize: '1.05rem', lineHeight: '1.7' }}>
+                    {selectedCareer.desc}
+                  </p>
+                  <div className="mt-4">
+                    <h6 className="fw-bold mb-3" style={{ color: '#0a39e6' }}>Detalles del Programa</h6>
+                    <ul style={{ textAlign: 'left', lineHeight: '2' }}>
+                      <li><strong style={{ color: '#0a39e6' }}>Duración:</strong> {selectedCareer.duracion}</li>
+                      <li><strong style={{ color: '#0a39e6' }}>Perfil del egresado:</strong> {selectedCareer.perfil}</li>
+                      <li><strong style={{ color: '#0a39e6' }}>Oportunidades laborales:</strong> {selectedCareer.oportunidades}</li>
+                    </ul>
+                  </div>
+                </div>
+                <div className="modal-footer modal-footer-custom">
+                  <button 
+                    type="button" 
+                    className="btn btn-secondary" 
+                    onClick={handleCloseModal}
+                    style={{
+                      borderRadius: '25px',
+                      padding: '0.5rem 2rem',
+                      fontWeight: '600',
+                      transition: 'all 0.3s ease'
+                    }}
+                  >
+                    Cerrar
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </>
       )}
     </div>
   );

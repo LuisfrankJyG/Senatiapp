@@ -1,0 +1,148 @@
+/* Animaciones para el Modal */
+
+/* Backdrop difuminado */
+.modal-backdrop-custom {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+  z-index: 1040;
+  animation: fadeIn 0.3s ease-out;
+  will-change: opacity;
+}
+
+.modal-backdrop-custom.closing {
+  animation: fadeOut 0.3s ease-out;
+}
+
+/* Animación del modal */
+.modal-custom {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease-out;
+  will-change: opacity;
+}
+
+.modal-custom.closing {
+  animation: fadeOut 0.3s ease-out;
+}
+
+.modal-dialog-custom {
+  animation: slideInDown 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+  will-change: transform, opacity;
+}
+
+.modal-custom.closing .modal-dialog-custom {
+  animation: slideOutUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-50px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes slideOutUp {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-50px) scale(0.95);
+  }
+}
+
+/* Mejoras visuales del modal */
+.modal-content-custom {
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  border: none;
+  background-color: #ffffff !important;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.modal-header-custom {
+  background: linear-gradient(135deg, #0a1931 0%, #0a39e6 100%);
+  color: white;
+  padding: 1.5rem;
+  border-bottom: 3px solid #00aaff;
+}
+
+.modal-body-custom {
+  padding: 2rem;
+  max-height: 70vh;
+  overflow-y: auto;
+  background-color: #ffffff !important;
+}
+
+.modal-footer-custom {
+  padding: 1.5rem;
+  background-color: #f8f9fa !important;
+  border-top: 1px solid #dee2e6;
+}
+
+/* Botón de cerrar mejorado */
+.btn-close-custom {
+  transition: all 0.3s ease;
+}
+
+.btn-close-custom:hover {
+  transform: rotate(90deg) scale(1.1);
+}
+
+/* Scrollbar personalizado para el modal */
+.modal-body-custom::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-body-custom::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.modal-body-custom::-webkit-scrollbar-thumb {
+  background: #00aaff;
+  border-radius: 10px;
+}
+
+.modal-body-custom::-webkit-scrollbar-thumb:hover {
+  background: #0a39e6;
+}

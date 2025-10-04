@@ -7,30 +7,25 @@ function Navbar() {
     <>
       <style>{`
         .navbar-senati {
-          background-color: #0a2d5e; /* Azul oscuro institucional */
+          background-color: #0a2d5e;
           transition: background-color 0.3s ease;
         }
-
         .logo-senati {
           height: 40px;
           transition: transform 0.3s ease;
         }
-
         .brand-senati:hover .logo-senati {
           transform: scale(1.05);
         }
-
         .nav-link-senati {
           color: #ffffff !important;
           margin-left: 15px;
           position: relative;
           transition: color 0.3s ease;
         }
-
         .nav-link-senati:hover {
-          color: #00b4ff !important; /* Azul claro de acento */
+          color: #00b4ff !important;
         }
-
         .nav-link-senati::after {
           content: "";
           position: absolute;
@@ -41,7 +36,6 @@ function Navbar() {
           background-color: #00b4ff;
           transition: width 0.3s ease;
         }
-
         .nav-link-senati:hover::after {
           width: 100%;
         }
@@ -73,8 +67,8 @@ function Navbar() {
               <Nav.Link as={Link} to={RUTAS.CONTACTO} className="fw-medium nav-link-senati">
                 Contáctanos
               </Nav.Link>
-              <Nav.Link as={Link} to="/usuario/123" className="fw-medium nav-link-senati">
-                Usuario ejemplo
+              <Nav.Link as={Link} to={RUTAS.CARRERAS} className="fw-medium nav-link-senati">
+                Carreras
               </Nav.Link>
             </Nav>
           </BootstrapNavBar.Collapse>
